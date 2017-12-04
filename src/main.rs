@@ -14,4 +14,8 @@ fn main()
     println!("day_3");
     println!("first_puzzle: {}", calendar::day_3::first_puzzle());
     println!("second_puzzle: {}", calendar::day_3::second_puzzle());
+
+    println!("day_4");
+    println!("first_puzzle: {}", calendar::day_4::first_puzzle());
+    println!("second_puzzle: {}", calendar::day_4::second_puzzle());
 }
