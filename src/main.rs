@@ -1,6 +1,5 @@
 extern crate calendar;
 
-
 fn main() 
 {
     println!("day_1");
@@ -23,4 +22,7 @@ fn main()
     println!("first_puzzle: {}", calendar::day_5::first_puzzle());
     println!("second_puzzle: {}", calendar::day_5::second_puzzle());
 
+    println!("day_6");
+    println!("first_puzzle: {}", calendar::day_6::first_puzzle());
+    println!("second_puzzle: {}", calendar::day_6::second_puzzle());
 }
