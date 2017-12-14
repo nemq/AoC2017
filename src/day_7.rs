@@ -25,7 +25,10 @@ fn read_tree(path: &str) -> Result<Node, &'static str>
     let reader = BufReader::new(file); 
     for line in reader.lines().filter_map(|res| res.ok())
     {
-        parser.parse(&line);
+        if let Err(msg) = parser.parse(&line)
+        {
+            println!("paring error: {}", msg);
+        }
     }
 
     parser.build_tree()

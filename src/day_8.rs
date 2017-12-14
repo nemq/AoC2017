@@ -70,11 +70,6 @@ impl Registers
         self.registers.entry(String::from(name)).or_insert(0)
     }
 
-    fn set(self: &mut Self, name: &str, val: i32)
-    {
-        self.registers.insert(String::from(name), val);
-    }
-
     fn max(self: &Self) -> Option<i32>
     {
         self.registers.values().cloned().max()
