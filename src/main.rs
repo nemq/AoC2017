@@ -75,6 +75,11 @@ fn main()
                 println!("first_puzzle: {}", calendar::day_14::first_puzzle());
                 println!("second_puzzle: {}", calendar::day_14::second_puzzle());
             },
+            "day_15" => {
+                println!("day_15");
+                println!("first_puzzle: {}", calendar::day_15::first_puzzle());
+                println!("second_puzzle: {}", calendar::day_15::second_puzzle());
+            },
             _ => {
                 println!("Unrecognized day: {}", day);
             }
