@@ -3,7 +3,7 @@ pub fn first_puzzle() -> String
 {
     let mut numbers: Vec<i32> = (0..256).collect();
     let lengths = vec![187,254,0,81,169,219,1,190,19,102,255,56,46,32,2,216];
-    format!("{}", knot_hash(&mut numbers, &lengths))
+    format!("{}", knot_sparse_hash(&mut numbers, &lengths))
 }
 
 pub fn second_puzzle() -> String
@@ -52,7 +52,7 @@ fn tie_knot(numbers: &mut Vec<i32>, lengths: &Vec<usize>)
     }
 }
 
-fn knot_hash(mut numbers: &mut Vec<i32>, lengths: &Vec<usize>) -> i32
+fn knot_sparse_hash(mut numbers: &mut Vec<i32>, lengths: &Vec<usize>) -> i32
 {
     tie_knot_round(&mut numbers, &lengths, &mut 0, &mut 0);
     numbers.iter().take(2).fold(1, |acc, &el| acc * el)
@@ -69,6 +69,13 @@ fn knot_dense_hash(mut numbers: &mut Vec<i32>, lengths: &Vec<usize>) -> String
     }
 
     hash
+}
+
+pub fn knot_hash(key: &str) -> String
+{
+    let mut numbers: Vec<i32> = (0..256).collect();
+    let lengths = lengths(key);
+    knot_dense_hash(&mut numbers, &lengths)
 }
 
 fn lengths(input: &str) -> Vec<usize>
@@ -112,11 +119,11 @@ mod tests
     }
 
     #[test]
-    fn test_knot_hash()
+    fn test_knot_sparse_hash()
     {
         let mut numbers = vec![0, 1, 2, 3, 4];
         let lengths = vec![3, 4, 1, 5];
-        assert_eq!(knot_hash(&mut numbers, &lengths), 12);
+        assert_eq!(knot_sparse_hash(&mut numbers, &lengths), 12);
     }
 
     #[test]
@@ -131,5 +138,6 @@ mod tests
         let mut numbers: Vec<_> = (0..256).collect();
         let mut lengths = lengths("");
         assert_eq!(knot_dense_hash(&mut numbers, &lengths), String::from("a2582a3a0e66e6e86e3812dcb672a272"));
+        assert_eq!(knot_hash(""), String::from("a2582a3a0e66e6e86e3812dcb672a272"));
     }
 }
