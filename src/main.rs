@@ -80,6 +80,21 @@ fn main()
                 println!("first_puzzle: {}", calendar::day_15::first_puzzle());
                 println!("second_puzzle: {}", calendar::day_15::second_puzzle());
             },
+            "day_16" => {
+                println!("day_16");
+                println!("first_puzzle: {}", calendar::day_16::first_puzzle());
+                println!("second_puzzle: {}", calendar::day_16::second_puzzle());
+            },
+            "day_17" => {
+                println!("day_17");
+                println!("first_puzzle: {}", calendar::day_17::first_puzzle());
+                println!("second_puzzle: {}", calendar::day_17::second_puzzle());
+            },
+            "day_18" => {
+                println!("day_18");
+                println!("first_puzzle: {}", calendar::day_18::first_puzzle());
+                println!("second_puzzle: {}", calendar::day_18::second_puzzle());
+            },
             _ => {
                 println!("Unrecognized day: {}", day);
             }
