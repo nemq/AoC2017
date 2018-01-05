@@ -245,7 +245,7 @@ mod tests
 { 
     use super::*; 
 
-    static sample: &str = 
+    static SAMPLE: &str = 
 "pbga (66)
 xhth (57)
 ebii (61)
@@ -264,9 +264,9 @@ cntj (57)";
     fn first_puzzle() 
     {
        let mut parser = TreeParser::new();
-       for line in sample.split_terminator('\n')
+       for line in SAMPLE.split_terminator('\n')
        {
-           parser.parse(line);
+           parser.parse(line).unwrap();
        }
 
        let root = parser.build_tree().unwrap();
@@ -282,9 +282,9 @@ cntj (57)";
     fn second_puzzle() 
     {
        let mut parser = TreeParser::new();
-       for line in sample.split_terminator('\n')
+       for line in SAMPLE.split_terminator('\n')
        {
-           parser.parse(line);
+           parser.parse(line).unwrap();
        }
 
        let root = parser.build_tree().unwrap();

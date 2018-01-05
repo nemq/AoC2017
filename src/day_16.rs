@@ -29,47 +29,47 @@ pub fn second_puzzle() -> String {
 
 #[derive(Clone)]
 #[derive(PartialEq)]
-enum Program {a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p}
+enum Program {A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P}
 
 fn char_to_prog(c: char) -> Program {
     match c {
-        'a' => Program::a,
-        'b' => Program::b,
-        'c' => Program::c,
-        'd' => Program::d,
-        'e' => Program::e,
-        'f' => Program::f,
-        'g' => Program::g,
-        'h' => Program::h,
-        'i' => Program::i,
-        'j' => Program::j,
-        'k' => Program::k,
-        'l' => Program::l,
-        'm' => Program::m,
-        'n' => Program::n,
-        'o' => Program::o,
-        'p' => Program::p,
+        'a' => Program::A,
+        'b' => Program::B,
+        'c' => Program::C,
+        'd' => Program::D,
+        'e' => Program::E,
+        'f' => Program::F,
+        'g' => Program::G,
+        'h' => Program::H,
+        'i' => Program::I,
+        'j' => Program::J,
+        'k' => Program::K,
+        'l' => Program::L,
+        'm' => Program::M,
+        'n' => Program::N,
+        'o' => Program::O,
+        'p' => Program::P,
         _   => panic!("Invalid char: {}", c) 
     }
 }
 fn prog_to_char(prog: &Program) -> char {
     match *prog {
-        Program::a => 'a',
-        Program::b => 'b',
-        Program::c => 'c',
-        Program::d => 'd',
-        Program::e => 'e',
-        Program::f => 'f',
-        Program::g => 'g',
-        Program::h => 'h',
-        Program::i => 'i',
-        Program::j => 'j',
-        Program::k => 'k',
-        Program::l => 'l',
-        Program::m => 'm',
-        Program::n => 'n',
-        Program::o => 'o',
-        Program::p => 'p',
+        Program::A => 'a',
+        Program::B => 'b',
+        Program::C => 'c',
+        Program::D => 'd',
+        Program::E => 'e',
+        Program::F => 'f',
+        Program::G => 'g',
+        Program::H => 'h',
+        Program::I => 'i',
+        Program::J => 'j',
+        Program::K => 'k',
+        Program::L => 'l',
+        Program::M => 'm',
+        Program::N => 'n',
+        Program::O => 'o',
+        Program::P => 'p',
     }
 }
 
@@ -81,10 +81,10 @@ struct DanceHall {
 
 impl DanceHall {
     fn new() -> DanceHall {
-        let dancers = vec![Program::a, Program::b, Program::c, Program::d,
-                           Program::e, Program::f, Program::g, Program::h,
-                           Program::i, Program::j, Program::k, Program::l,
-                           Program::m, Program::n, Program::o, Program::p];
+        let dancers = vec![Program::A, Program::B, Program::C, Program::D,
+                           Program::E, Program::F, Program::G, Program::H,
+                           Program::I, Program::J, Program::K, Program::L,
+                           Program::M, Program::N, Program::O, Program::P];
         DanceHall{dancers}
     }
 
@@ -222,7 +222,7 @@ mod tests {
             _ => false
         });
         assert!(match DanceHall::parse("pe/b") {
-            DanceMove::Partner(Program::e, Program::b) => true,
+            DanceMove::Partner(Program::E, Program::B) => true,
             _ => false
         });
     }

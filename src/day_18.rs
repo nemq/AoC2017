@@ -115,6 +115,7 @@ impl Assembler {
             ic: 0 }
     }
 
+    #[allow(dead_code)]
     fn dump_regs(&self) -> String {
         let mut s = String::new();
         let mut keys = self.registers.keys().collect::<Vec<_>>();
@@ -133,6 +134,7 @@ impl Assembler {
         }
     }
 
+    #[cfg(test)]
     fn load_program_str(&mut self, prog: &str) {
         for line in prog.split('\n').filter(|l| !l.is_empty()) {
             self.instructions.push(String::from(line.trim()));
@@ -153,12 +155,6 @@ impl Assembler {
                 "rcv" => true, 
                 _     => false
             }
-        }
-    }
-
-    fn execute_program(&mut self) {
-        while self.terminated() {
-            self.execute_next_instruction();
         }
     }
 
@@ -284,7 +280,7 @@ mod tests {
 
     #[test]
     fn test_assembler() {
-        let mut assembler = Assembler::new();
+        let mut assembler = Assembler::new(0);
         let prog = "
             set a 1
             add a 2
@@ -307,21 +303,18 @@ mod tests {
         assert_eq!(assembler.registers[&'a'], 9);
         assembler.execute_next_instruction();
         assert_eq!(assembler.registers[&'a'], 4);
-        assembler.execute_next_instruction();
-        assert_eq!(assembler.curr_freq, Some(4));
+        assert_eq!(assembler.execute_next_instruction(), Some(4));
         assembler.execute_next_instruction();
         assert_eq!(assembler.registers[&'a'], 0);
-        assembler.execute_next_instruction();
-        assert_eq!(assembler.first_freq, None);
-        assembler.execute_next_instruction();
-        assert_eq!(assembler.ic, 8);
-        assembler.execute_next_instruction();
-        assert_eq!(assembler.registers[&'a'], 1);
-        assembler.execute_next_instruction();
-        assert_eq!(assembler.ic, 7);
+        assert_eq!(assembler.execute_next_instruction(), None);
         assembler.execute_next_instruction();
         assert_eq!(assembler.ic, 6);
         assembler.execute_next_instruction();
-        assert_eq!(assembler.first_freq, Some(4));
+        assert_eq!(assembler.registers[&'a'], 0);
+        assembler.execute_next_instruction();
+        assert_eq!(assembler.ic, 6);
+        assembler.execute_next_instruction();
+        assert_eq!(assembler.ic, 6);
+        assembler.execute_next_instruction();
     }
 }

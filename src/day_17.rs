@@ -51,7 +51,7 @@ impl SpinLock {
         if self.pos < self.buffer.len() {
             self.buffer.insert(self.pos, val);
         }
-        else if (self.pos == self.buffer.len()) {
+        else if self.pos == self.buffer.len() {
             self.buffer.push(val);
         }
         else {
@@ -61,7 +61,6 @@ impl SpinLock {
 }
 
 struct SpinLockSim {
-    step: usize,
     cache_size: usize,
     cache: HashMap<usize, usize>
 }
@@ -74,7 +73,7 @@ impl SpinLockSim {
             let pos = (cache[&(t-1)] + step) % SpinLockSim::buffer_len(t-1) + 1;
             cache.insert(t, pos);
         }
-        SpinLockSim {step, cache_size, cache}
+        SpinLockSim {cache_size, cache}
     }
 
     fn buffer_len(time: usize) -> usize {
@@ -97,6 +96,6 @@ impl SpinLockSim {
 
 impl fmt::Debug for SpinLock {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "pos: {}\t step: {}\n{:?}", self.pos, self.step, self.buffer) 
+        write!(f, "pos: {}\n{:?}", self.pos, self.buffer) 
     }
 }

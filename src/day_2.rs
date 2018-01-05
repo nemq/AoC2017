@@ -89,13 +89,13 @@ fn from_str(data: &str) -> Spreadsheet
 mod tests 
 {
     use super::*;
-
     macro_rules! spreadsheet 
     {
         ( $($( $x:expr ),*);* ) => {
             {
                 let mut sheet = Spreadsheet::new();
                 $(
+                    #[allow(unused_mut)]
                     let mut row = Vec::new();
                     $(
                         row.push($x);

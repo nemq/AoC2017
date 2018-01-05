@@ -136,7 +136,7 @@ mod tests
     fn test_knot_dense_hash()
     {
         let mut numbers: Vec<_> = (0..256).collect();
-        let mut lengths = lengths("");
+        let lengths = lengths("");
         assert_eq!(knot_dense_hash(&mut numbers, &lengths), String::from("a2582a3a0e66e6e86e3812dcb672a272"));
         assert_eq!(knot_hash(""), String::from("a2582a3a0e66e6e86e3812dcb672a272"));
     }

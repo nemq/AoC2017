@@ -56,12 +56,6 @@ impl Layer
         }
     }
 
-    fn reset(self: &mut Self)
-    {
-        self.scanner_pos = 0;
-        self.scanner_dir = Dir::Down;
-    }
-
     fn severity(self: &Self) -> u32
     {
         self.depth * self.range
@@ -123,6 +117,8 @@ impl Firewall
         self.layers.insert(layer.depth, layer);
     }
 
+
+    #[cfg(test)]
     fn from_str(lines: &str) -> Firewall
     {
         let mut firewall = Firewall::new();
@@ -245,7 +241,7 @@ mod tests
     fn test_parsing()
     {
         let lines = "0: 3\n1: 2\n4: 4\n6: 4";
-        let mut firewall = Firewall::from_str(lines);
+        let firewall = Firewall::from_str(lines);
         assert!( match firewall.packet_state {
             PacketState::Standing => true,
             _ => false
@@ -294,7 +290,7 @@ mod tests
     fn test_scanner_pos()
     {
         let lines = "0: 3\n1: 2\n4: 4\n6: 4";
-        let mut firewall = Firewall::from_str(lines);
+        let firewall = Firewall::from_str(lines);
         assert_eq!(firewall.layers[&0].scanner_pos(0), 0);
         assert_eq!(firewall.layers[&0].scanner_pos(1), 1);
         assert_eq!(firewall.layers[&0].scanner_pos(2), 2);
@@ -336,7 +332,7 @@ mod tests
     fn caught_delay()
     {
         let lines = "0: 3\n1: 2\n4: 4\n6: 4";
-        let mut firewall = Firewall::from_str(lines);
+        let firewall = Firewall::from_str(lines);
         assert_eq!(firewall.caught_delay(0), true);
         assert_eq!(firewall.caught_delay(1), true);
         assert_eq!(firewall.caught_delay(2), true);

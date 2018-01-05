@@ -1,11 +1,11 @@
 
 pub fn first_puzzle() -> String {
-    let mut judge = Judge::new(Generator::A(679), Generator::B(771));
+    let judge = Judge::new(Generator::a(679), Generator::b(771));
     format!("{}", judge.judge(40000000))
 }
 
 pub fn second_puzzle() -> String {
-    let mut judge = Judge::new(Generator::A(679), Generator::B(771));
+    let judge = Judge::new(Generator::a(679), Generator::b(771));
     format!("{}", judge.judge_cond(5000000))
 }
 
@@ -25,11 +25,11 @@ impl Generator {
         2147483647
     }
 
-    fn A(start_val: u64) -> Generator {
+    fn a(start_val: u64) -> Generator {
         Generator::new(16807, start_val, 4)
     }
 
-    fn B(start_val: u64) -> Generator {
+    fn b(start_val: u64) -> Generator {
         Generator::new(48271, start_val, 8)
     }
 
@@ -50,13 +50,13 @@ impl Generator {
 }
 
 struct Judge {
-    A: Generator,
-    B: Generator,
+    a: Generator,
+    b: Generator,
 }
 
 impl Judge {
-    fn new(A: Generator, B: Generator) -> Judge {
-        Judge {A, B}
+    fn new(a: Generator, b: Generator) -> Judge {
+        Judge {a, b}
     }
 
     fn equal(self: &Self, a: u64, b: u64) -> bool {
@@ -66,8 +66,8 @@ impl Judge {
     fn judge(mut self: Self, attempts: u64) -> u64 {
         let mut matches = 0;
         for _ in 0..attempts {
-            let a = self.A.generate();
-            let b = self.B.generate();
+            let a = self.a.generate();
+            let b = self.b.generate();
             if self.equal(a, b) {
                 matches += 1;
             }
@@ -79,12 +79,12 @@ impl Judge {
         let mut matches = 0;
         for _ in  0 .. attempts {
            let a  = loop {
-               if let Some(val) = self.A.generate_cond() {
+               if let Some(val) = self.a.generate_cond() {
                    break val;
                }
            };
            let b = loop {
-               if let Some(val) = self.B.generate_cond() {
+               if let Some(val) = self.b.generate_cond() {
                    break val;
                }
            };
@@ -103,27 +103,27 @@ mod tests {
 
     #[test]
     fn test_generators() {
-        let mut A = Generator::A(65);
-        let mut B = Generator::B(8921);
-        assert_eq!(A.generate(), 1092455);
-        assert_eq!(B.generate(), 430625591);
-        assert_eq!(A.generate(), 1181022009);
-        assert_eq!(B.generate(), 1233683848);
-        assert_eq!(A.generate(), 245556042);
-        assert_eq!(B.generate(), 1431495498);
+        let mut a = Generator::a(65);
+        let mut b = Generator::b(8921);
+        assert_eq!(a.generate(), 1092455);
+        assert_eq!(b.generate(), 430625591);
+        assert_eq!(a.generate(), 1181022009);
+        assert_eq!(b.generate(), 1233683848);
+        assert_eq!(a.generate(), 245556042);
+        assert_eq!(b.generate(), 1431495498);
     }
 
     #[test]
     fn test_judge() {
-        let mut judge =Judge::new(Generator::A(65), Generator::B(8921));
+        let judge =Judge::new(Generator::a(65), Generator::b(8921));
         assert_eq!(judge.judge(5), 1);
-        let mut judge =Judge::new(Generator::A(65), Generator::B(8921));
+        let judge =Judge::new(Generator::a(65), Generator::b(8921));
         assert_eq!(judge.judge(40000000), 588);
     }
 
     #[test]
     fn test_judge_cond() {
-        let mut judge = Judge::new(Generator::A(65), Generator::B(8921));
+        let judge = Judge::new(Generator::a(65), Generator::b(8921));
         assert_eq!(judge.judge_cond(1056), 1);
     }
 }
