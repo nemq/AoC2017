@@ -100,6 +100,11 @@ fn main()
                 println!("first_puzzle: {}", calendar::day_19::first_puzzle());
                 println!("second_puzzle: {}", calendar::day_19::second_puzzle());
             },
+            "day_20" => {
+                println!("day_20");
+                println!("first_puzzle: {}", calendar::day_20::first_puzzle());
+                println!("second_puzzle: {}", calendar::day_20::second_puzzle());
+            },
             _ => {
                 println!("Unrecognized day: {}", day);
             }
