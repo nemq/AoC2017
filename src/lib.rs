@@ -1,3 +1,5 @@
+pub mod simple_error;
+
 pub mod day_1;
 pub mod day_2;
 pub mod day_3;
@@ -18,3 +20,8 @@ pub mod day_17;
 pub mod day_18;
 pub mod day_19;
 pub mod day_20;
+pub mod day_21;
+pub mod day_22;
+pub mod day_23;
+pub mod day_24;
+pub mod day_25;

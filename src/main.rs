@@ -105,6 +105,31 @@ fn main()
                 println!("first_puzzle: {}", calendar::day_20::first_puzzle());
                 println!("second_puzzle: {}", calendar::day_20::second_puzzle());
             },
+            "day_21" => {
+                println!("day_21");
+                println!("first_puzzle: {}", calendar::day_21::first_puzzle());
+                println!("second_puzzle: {}", calendar::day_21::second_puzzle());
+            },
+            "day_22" => {
+                println!("day_22");
+                println!("first_puzzle: {}", calendar::day_22::first_puzzle());
+                println!("second_puzzle: {}", calendar::day_22::second_puzzle());
+            },
+            "day_23" => {
+                println!("day_23");
+                println!("first_puzzle: {}", calendar::day_23::first_puzzle());
+                println!("second_puzzle: {}", calendar::day_23::second_puzzle());
+            },
+            "day_24" => {
+                println!("day_24");
+                println!("first_puzzle: {}", calendar::day_24::first_puzzle());
+                println!("second_puzzle: {}", calendar::day_24::second_puzzle());
+            },
+            "day_25" => {
+                println!("day_25");
+                println!("first_puzzle: {}", calendar::day_25::first_puzzle());
+                println!("second_puzzle: {}", calendar::day_25::second_puzzle());
+            },
             _ => {
                 println!("Unrecognized day: {}", day);
             }

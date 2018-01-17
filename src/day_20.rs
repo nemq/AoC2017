@@ -1,5 +1,6 @@
 use std::error::Error;
 use std::fmt;
+use simple_error::SimpleError;
 use std::io::prelude::*; 
 use std::fs::File; 
 use std::collections::HashMap;
@@ -40,28 +41,7 @@ pub fn second_puzzle() -> String {
     format!("{}", particles_count)
 }
 
-#[derive(Debug)]
-struct SimpleError {
-   msg: String,
-}
 
-impl SimpleError {
-    fn new(msg: &str) -> SimpleError {
-        SimpleError{msg: String::from(msg)}
-    }
-}
-
-impl fmt::Display for SimpleError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "SimpleError: {}", self.msg)
-    }
-}
-
-impl Error for SimpleError {
-    fn description(&self) -> &str {
-        &self.msg
-    }
-}
 
 #[derive(Hash, Eq, PartialEq, Debug, Clone)]
 struct Vec3 {

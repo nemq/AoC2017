@@ -80,11 +80,11 @@ pub fn second_puzzle() -> String {
 }
 
 
-struct Assembler {
-    registers: HashMap<char, i64>,
-    instructions: Vec<String>,
+pub struct Assembler {
+    pub registers: HashMap<char, i64>,
+    pub instructions: Vec<String>,
     messages: VecDeque<i64>,
-    ic: i64
+    pub ic: i64
 }
 
 enum Opperand {
@@ -102,7 +102,7 @@ fn parse(token: &str) -> Opperand {
 }
 
 impl Assembler {
-    fn new(id: i64) -> Assembler {
+    pub fn new(id: i64) -> Assembler {
         let mut registers = HashMap::new();
         for c in "abcdefghijklmnoprstuvwxyz".chars() {
             registers.insert(c, 0);
@@ -116,7 +116,7 @@ impl Assembler {
     }
 
     #[allow(dead_code)]
-    fn dump_regs(&self) -> String {
+    pub fn dump_regs(&self) -> String {
         let mut s = String::new();
         let mut keys = self.registers.keys().collect::<Vec<_>>();
         keys.sort();
@@ -126,7 +126,7 @@ impl Assembler {
         s
     }
 
-    fn load_program(&mut self, path: &str) {
+    pub fn load_program(&mut self, path: &str) {
         let file = File::open(path).expect("Failed to open assembly file"); 
         let reader = BufReader::new(file); 
         for line in reader.lines().filter_map(|res| res.ok()).filter(|l| !l.is_empty()) {
@@ -135,13 +135,13 @@ impl Assembler {
     }
 
     #[cfg(test)]
-    fn load_program_str(&mut self, prog: &str) {
+    pub fn load_program_str(&mut self, prog: &str) {
         for line in prog.split('\n').filter(|l| !l.is_empty()) {
             self.instructions.push(String::from(line.trim()));
         }
     }
 
-    fn terminated(&self) -> bool {
+    pub fn terminated(&self) -> bool {
         self.ic < 0 || self.ic >= self.instructions.len() as i64
     }
 
@@ -206,6 +206,7 @@ impl Assembler {
                    "add" =>  *self.registers.get_mut(&target).unwrap() += val,
                    "mul" =>  *self.registers.get_mut(&target).unwrap() *= val,
                    "mod" =>  *self.registers.get_mut(&target).unwrap() %= val,
+                   "sub" =>  *self.registers.get_mut(&target).unwrap() -= val,
                     _ => {}
                 }
             },
@@ -215,6 +216,7 @@ impl Assembler {
                    "add" =>  *self.registers.get_mut(&target).unwrap() += val,
                    "mul" =>  *self.registers.get_mut(&target).unwrap() *= val,
                    "mod" =>  *self.registers.get_mut(&target).unwrap() %= val,
+                   "sub" =>  *self.registers.get_mut(&target).unwrap() -= val,
                     _ => {}
                 }
             },
@@ -245,9 +247,29 @@ impl Assembler {
         }
     }
 
-    fn execute_next_instruction(&mut self) -> Option<i64> {
+    fn jnz(&mut self, instr: &str) {
+        let mut iter = instr.split_whitespace();
+        iter.next();
+        let opp_one = parse(iter.next().expect(&format!("jnz: Missing first opperand: {}", instr)));
+        let opp_two = parse(iter.next().expect(&format!("jnz: Missing second opperand: {}", instr)));
+        match opp_one {
+            Opperand::Reg(r) if (self.registers[&r] != 0) => {
+                match opp_two {
+                    Opperand::Reg(r) => self.ic += self.registers[&r],
+                    Opperand::Const(c) => self.ic += c
+                }
+            }, 
+            Opperand::Const(c) if c != 0 => {
+                match opp_two {
+                    Opperand::Reg(r) => self.ic += self.registers[&r],
+                    Opperand::Const(c) => self.ic += c
+                }
+            },
+            _ => { self.ic += 1}
+        }
+    }
+    pub fn execute_next_instruction(&mut self) -> Option<i64> {
         let instruction = self.instructions[self.ic as usize].clone();
-        // println!("{}:{}\t{}",self.ic, instruction, self.dump_regs());
         match instruction.split_whitespace().next() {
             Some("snd") => {
                 Some(self.snd(&instruction))
@@ -255,7 +277,8 @@ impl Assembler {
             Some("set") |
             Some("add") |
             Some("mul") | 
-            Some("mod") => {
+            Some("mod") |
+            Some("sub") => {
                 self.arithmetic(&instruction);
                 None
                 },
@@ -267,6 +290,10 @@ impl Assembler {
                 self.jgz(&instruction);
                 None
                 },
+            Some("jnz") => {
+                self.jnz(&instruction);
+                None
+            },
             _   => {
                 panic!("Invalid instruciton: {}", instruction);
             }
